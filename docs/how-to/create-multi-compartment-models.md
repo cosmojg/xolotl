@@ -18,13 +18,20 @@ The `Axial` synapse is a special type of electrical synapse that forces you to t
 Thus, the general recipe for creating a multi-compartment cable is:
 
 ```matlab
-x.add('compartment','Soma')
-x.add('compartment','Neurite')
-x.slice('Neurite',10)
-x.connect('Neurite01','Soma')
+x.add('compartment', 'Soma')
+x.add('compartment', 'Neurite')
+x.slice('Neurite', 10)
+x.connect('Neurite01', 'Soma')
 ```
 
 Note that we're using the `slice` function to slice up a cylinder into shorter sections, which also automatically wires them up using `Axial` synapses.
+
+`connect` defaults to an `Axial` synapse with lengthwise `resistivity` of 0. You
+can specify the synapse type and the resistivity normally.
+
+```matlab
+x.connect('Neurite01', 'Soma', 'Axial', 'resistivity', 1.7);
+```
 
 An example showing a multi-compartment model is found in `demo_multi_compartment.m`
 
