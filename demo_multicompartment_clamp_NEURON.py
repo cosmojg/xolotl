@@ -1,0 +1,22 @@
+## create a multi-compartment model of a soma and neurite
+## voltage clamp the soma, record the rectifying current
+## add the rectifying current back into the soma
+## to attempt to reproduce voltage-clamped neuron activity
+
+from neuron import h, gui
+
+## Instantiate neuronal compartments
+soma = h.Section(name='soma')
+dend = h.Section(name='dend')
+
+soma.L      = 0.05 / 10     # mm -> cm
+soma.diam   = 0.025 / 5     # mm radius -> cm diameter
+soma.cm     = 10 / 10       # nF/mm^2 -> μF/cm^2
+soma.Ra     = 1e-3 * 1e5    # MΩ⋅mm -> Ω⋅cm
+soma.nseg   = 1
+
+dend.L      = 0.35
+dend.diam   = 0.1 / 10
+dend.cm     = 10 / 10
+dend.Ra     = 1e-3 * 1e5
+dend.nseg   = 10
