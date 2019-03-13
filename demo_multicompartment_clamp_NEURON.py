@@ -31,9 +31,11 @@ gbars       = [104, 11.76, 4.7, 0.1, 390, 250, 2e3] * 1e-4  # S/cm^2
 Erevs       = [-80, 30, 30, -20, -80, -80, 50]              # mV
 
 # add all conductances to the Section objects
-for cond in conds:
-    soma.insert(cond)
-    dend.insert(cond)
+# add calcium concentration
+for sec in [soma, dend]:
+    sec.insert('cad')
+    for cond in conds:
+        sec.insert(cond)
 
 # update the parameters of the conductances
 for sec in [soma, dend]:
