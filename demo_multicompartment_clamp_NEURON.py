@@ -4,7 +4,7 @@
 ## to attempt to reproduce voltage-clamped neuron activity
 
 from neuron import h, gui
-from matplotlib import pyplot
+import matplotlib.pyplot as plt
 import numpy as np
 
 ## Instantiate neuronal compartments
@@ -86,3 +86,9 @@ pyplot.plot(t_vec, v_vec)
 pyplot.xlabel('time (ms)')
 pyplot.ylabel('mV')
 pyplot.show()
+plt.figure(figsize=(8,4))
+plt.plot(t_vec, V_clamp)
+plt.plot(t_vec, v_vec)
+plt.xlabel('time (ms)')
+plt.ylabel('mV')
+plt.show()
