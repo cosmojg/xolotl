@@ -56,7 +56,7 @@ h.tstop     = 5000
 
 # set up the clamping voltage
 t           = h.Vector(1e-3 * np.linspace(h.dt, h.tstop, h.tstop/h.dt))
-V_clamp     = h.Vector(np.linspace(0, 30, length(t)) + 30 * np.sin(1e-3 * 1:length(t)) - 50)
+V_clamp     = h.Vector(np.linspace(0, 30, len(t)) + 30 * np.sin(1e-3 * np.arange(1, len(t)) - 50))
 
 # skip actually simulating the model, since we will get voltage V_clamp
 # v_vec       = h.Vector()
@@ -80,12 +80,6 @@ h.run()
 
 ## Visualize the results
 
-pyplot.figure(figsize=(8,4))
-pyplot.plot(t_vec, V_clamp)
-pyplot.plot(t_vec, v_vec)
-pyplot.xlabel('time (ms)')
-pyplot.ylabel('mV')
-pyplot.show()
 plt.figure(figsize=(8,4))
 plt.plot(t_vec, V_clamp)
 plt.plot(t_vec, v_vec)
