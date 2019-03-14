@@ -4,6 +4,7 @@
 ## to attempt to reproduce voltage-clamped neuron activity
 
 from neuron import h, gui
+from matplotlib import pyplot
 import numpy as np
 
 ## Instantiate neuronal compartments
@@ -53,7 +54,35 @@ h.dt        = 0.1
 h.t         = h.dt
 h.tstop     = 5000
 
+# set up the clamping voltage
 t           = h.Vector(1e-3 * np.linspace(h.dt, h.tstop, h.tstop/h.dt))
 V_clamp     = h.Vector(np.linspace(0, 30, length(t)) + 30 * np.sin(1e-3 * 1:length(t)) - 50)
 
-V_clamp.play(soma(0.5).V, t, True)
+# skip actually simulating the model, since we will get voltage V_clamp
+# v_vec       = h.Vector()
+# v_vec.record(soma(0.5)._ref_v)
+# h.finitialize(-65)
+# h.run()
+
+# instantiate a single-electrode voltage clamp
+electrode   = h.SEClamp(soma(0.5))
+V_clamp.play(electrode._ref_amp1)
+
+## Simulate the model, recording the voltage
+
+t_vec       = h.Vector()
+v_vec       = h.Vector()
+t_vec.record(soma(0.5)._ref_t)
+v_vec.record(soma(0.5)._ref_v)
+
+h.finitialize(-65)
+h.run()
+
+## Visualize the results
+
+pyplot.figure(figsize=(8,4))
+pyplot.plot(t_vec, V_clamp)
+pyplot.plot(t_vec, v_vec)
+pyplot.xlabel('time (ms)')
+pyplot.ylabel('mV')
+pyplot.show()
