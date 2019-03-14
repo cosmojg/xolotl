@@ -29,7 +29,7 @@ dend.nseg   = 10
 ## Add conductances
 
 conds       = ['acurrent', 'cas', 'cat', 'hcurrent', 'kca', 'kd', 'nav']
-gbars       = [104, 11.76, 4.7, 0, 390, 250, 0] * 1e-4  # S/cm^2
+gbars       = np.array([104, 11.76, 4.7, 0, 390, 250, 0]) * 1e-4  # S/cm^2
 Erevs       = [-80, 30, 30, -20, -80, -80, 50]              # mV
 
 # add all conductances to the Section objects
