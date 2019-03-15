@@ -4,7 +4,7 @@
 ## to attempt to reproduce voltage-clamped neuron activity
 
 from neuron import h, gui
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as pyplot
 import numpy as np
 
 ## Instantiate neuronal compartments
@@ -64,35 +64,64 @@ h.dt        = 0.1
 h.t         = h.dt
 h.tstop     = 5000
 
-# set up the clamping voltage
+# instantiate a single-electrode voltage clamp
 t           = h.Vector(1e-3 * np.linspace(h.dt, h.tstop, h.tstop/h.dt))
 V_clamp     = h.Vector(np.linspace(0, 30, len(t)) + 30 * np.sin(1e-3 * np.arange(0, len(t)) - 50))
+myVClamp    = h.SEClamp(soma(0.5))
+V_clamp.play(myVClamp._ref_amp1, t, True)
 
-# skip actually simulating the model, since we will get voltage V_clamp
-# v_vec       = h.Vector()
-# v_vec.record(soma(0.5)._ref_v)
-# h.finitialize(-65)
-# h.run()
+## Simulate the model while voltage-clamping
 
-# instantiate a single-electrode voltage clamp
-electrode   = h.SEClamp(soma(0.5))
-V_clamp.play(electrode._ref_amp1, t, True)
+# acquire the clamping current
+t_vec_v     = h.Vector()
+v_vec_v     = h.Vector()
+I_clamp     = h.Vector()
+t_vec_v.record(h._ref_t)
+v_vec_v.record(soma(0.5)._ref_v)
+I_clamp.record(myVClamp._ref_i)
 
-## Simulate the model, recording the voltage
-
-t_vec       = h.Vector()
-v_vec       = h.Vector()
-t_vec.record(h._ref_t)
-v_vec.record(soma(0.5)._ref_v)
-
+# simulate the model
 h.finitialize(-65)
+h.dt        = 0.1
+h.t         = h.dt
+h.tstop     = 5000
+h.run()
+
+pyplot.figure()
+pyplot.plot(t_vec_v, v_vec_v)
+pyplot.show()
+
+## Simulate the model while current clamping
+
+# storage vectors
+t_vec_i     = h.Vector()
+v_vec_i     = h.Vector()
+t_vec_i.record(h._ref_t)
+v_vec_i.record(soma(0.5)._ref_v)
+
+# set up the current clamp
+myIClamp    = h.IClamp(soma(0.5))
+I_clamp.play(myIClamp._ref_i, t_vec_i, True)
+
+# simulate the model
+h.finitialize(-65)
+h.dt        = 0.1
+h.t         = h.dt
+h.tstop     = 5000
 h.run()
 
 ## Visualize the results
 
-plt.figure(figsize=(8,4))
-plt.plot(t_vec, V_clamp)
-plt.plot(t_vec, v_vec)
-plt.xlabel('time (ms)')
-plt.ylabel('mV')
-plt.show()
+h.dt        = 0.1
+h.t         = h.dt
+h.tstop     = 5000
+
+pyplot.figure
+pyplot.plot(t_vec_v, v_vec_v)
+
+# pyplot.figure(figsize=(8,4))
+# pyplot.plot(t_vec_v, v_vec_v);
+# pyplot.plot(t_vec_i, v_vec_i)
+# pyplot.xlabel('time (ms)')
+# pyplot.ylabel('mV')
+# pyplot.show()
