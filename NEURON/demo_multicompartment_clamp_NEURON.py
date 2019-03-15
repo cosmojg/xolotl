@@ -42,10 +42,6 @@ for sec in [soma, dend]:
 # update the parameters of the conductances
 for sec in [soma, dend]:
     for seg in sec:
-        for i, cond in enumerate(conds):
-            this = getattr(seg, cond)
-            sec.this.gbar = gbars[i]
-            sec.this.Erev = Erevs[i]
         seg.acurrent.gbar = gbars[0]
         seg.cas.gbar = gbars[1]
         seg.cat.gbar = gbars[2]
@@ -70,7 +66,7 @@ h.tstop     = 5000
 
 # set up the clamping voltage
 t           = h.Vector(1e-3 * np.linspace(h.dt, h.tstop, h.tstop/h.dt))
-V_clamp     = h.Vector(np.linspace(0, 30, len(t)) + 30 * np.sin(1e-3 * np.arange(1, len(t)) - 50))
+V_clamp     = h.Vector(np.linspace(0, 30, len(t)) + 30 * np.sin(1e-3 * np.arange(0, len(t)) - 50))
 
 # skip actually simulating the model, since we will get voltage V_clamp
 # v_vec       = h.Vector()
