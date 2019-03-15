@@ -82,7 +82,7 @@ V_clamp.play(electrode._ref_amp1, t, True)
 
 t_vec       = h.Vector()
 v_vec       = h.Vector()
-t_vec.record(soma(0.5)._ref_t)
+t_vec.record(h._ref_t)
 v_vec.record(soma(0.5)._ref_v)
 
 h.finitialize(-65)
