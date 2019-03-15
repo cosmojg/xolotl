@@ -46,6 +46,20 @@ for sec in [soma, dend]:
             this = getattr(seg, cond)
             sec.this.gbar = gbars[i]
             sec.this.Erev = Erevs[i]
+        seg.acurrent.gbar = gbars[0]
+        seg.cas.gbar = gbars[1]
+        seg.cat.gbar = gbars[2]
+        seg.hcurrent.gbar = gbars[3]
+        seg.kca.gbar = gbars[4]
+        seg.kd.gbar = gbars[5]
+        seg.na.gbar = gbars[6]
+        seg.acurrent.Erev = Erevs[0]
+        # seg.cas.Erev = Erevs[1]
+        # seg.cat.Erev = Erevs[2]
+        seg.hcurrent.Erev = Erevs[3]
+        seg.kca.Erev = Erevs[4]
+        seg.kd.Erev = Erevs[5]
+        seg.na.Erev = gbars[6]
 
 ## Generate the voltage waveform
 
