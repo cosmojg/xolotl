@@ -76,7 +76,7 @@ V_clamp     = h.Vector(np.linspace(0, 30, len(t)) + 30 * np.sin(1e-3 * np.arange
 
 # instantiate a single-electrode voltage clamp
 electrode   = h.SEClamp(soma(0.5))
-V_clamp.play(electrode._ref_amp1)
+V_clamp.play(electrode._ref_amp1, t, True)
 
 ## Simulate the model, recording the voltage
 
