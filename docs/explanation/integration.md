@@ -181,9 +181,8 @@ $$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) + \Delta \xi_x(t) $$
 
 Since we are solving these equations numerically with a fixed time step,
 we fetch a new independent and identically distributed Gaussian random number at each time step,
-such that $\Delta \xi_x(t) = h(V, t) \cdot \xi_x(t)$.
-$h$ is some function that returns a unitless scaling coefficient to determine the magnitude of the noise.
-Intuitively, it will incorporate the time step, the number of channels, and the dynamics of $x$.
+such that $\Delta \xi_x(t)$ is some function of $\xi_x(t)$.
+Intuitively, $\Delta \xi_i(t)$ will incorporate the time step, the number of channels, and the dynamics of $x$.
 
 Since the noise is per-channel, we calculate the number of channels using an approximation.
 
