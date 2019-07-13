@@ -3,7 +3,7 @@
 
 This document describes the "xolotl" class. This is a MATLAB
 class and the primary way you will interact with your
-simulations. 
+simulations.
 
 ## Properties
 
@@ -24,12 +24,12 @@ properties(xolotl)
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |     0, 1 | double | 
+| 0  |     0, 1 | double |
 
 `approx_channels`  determines whether approximations
-to computing gating functions should be used. 
-Look-up tables and approximations to the exponential 
-function significantly increase computational speed, 
+to computing gating functions should be used.
+Look-up tables and approximations to the exponential
+function significantly increase computational speed,
 but decrease accuracy, especially at high temporal
 resolution in the data.
 
@@ -37,11 +37,11 @@ resolution in the data.
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| true  |     true, false | logical | 
+| true  |     true, false | logical |
 
-`closed_loop`  determines whether initial conditions 
+`closed_loop`  determines whether initial conditions
 should be reset before a new simulation. If `closed_loop`
-is true, successive simulations will use the current 
+is true, successive simulations will use the current
 state of the `xolotl` object (e.g. the end state of the
 previous simulation if you run `integrate` twice in a row).
 
@@ -49,25 +49,25 @@ previous simulation if you run `integrate` twice in a row).
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| .05  |     +ve numbers | double | 
+| .05  |     +ve numbers | double |
 
-`dt` value stores the fixed time step for outputs from 
-simulation. Note that this is not the same as `sim_dt`. 
-This value determines the number of time steps in the 
+`dt` value stores the fixed time step for outputs from
+simulation. Note that this is not the same as `sim_dt`.
+This value determines the number of time steps in the
 output vectors. If `dt` and `sim_dt` differ, the simulation
-vector is interpolated before being output -- useful for 
+vector is interpolated before being output -- useful for
 running ultra-high definition simulations but not saving
 all that data.
 
-`dt` must be a integer multiple of `sim_dt`. If it is 
-not, an error will be thrown. 
+`dt` must be a integer multiple of `sim_dt`. If it is
+not, an error will be thrown.
 
 ### `V_clamp`
 
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| NaN  |     matrix, vector, scalar | double | 
+| NaN  |     matrix, vector, scalar | double |
 
 When `V_clamp` is not a `NaN`, xolotl will assume that you are
 running the simulation in voltage clamp mode. `V_clamp` must be either:
@@ -76,16 +76,16 @@ running the simulation in voltage clamp mode. `V_clamp` must be either:
 * a matrix of size (n_steps,n_compartments) where n_steps is the number
  of steps in the integration (which is x.t_end/x.sim_dt)
 
-Incorrectly sized `V_clamp` will throw an error. 
+Incorrectly sized `V_clamp` will throw an error.
 
-You cannot simultaneously inject current and voltage clamp 
-any compartment. 
+You cannot simultaneously inject current and voltage clamp
+any compartment.
 
 ### `I_ext`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |     matrix, vector, scalar | double | 
+| 0  |     matrix, vector, scalar | double |
 
 `I_ext` must be either:
 
@@ -93,36 +93,36 @@ any compartment.
 * a matrix of size (n_steps,n_compartments) where n_steps is the number
  of steps in the integration (which is x.t_end/x.sim_dt)
 
-Incorrectly sized `I_ext` will throw an error. 
+Incorrectly sized `I_ext` will throw an error.
 
-You cannot simultaneously inject current and voltage clamp 
-any compartment. 
+You cannot simultaneously inject current and voltage clamp
+any compartment.
 
 ### `stochastic_channels`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |   0, 1 | double | 
+| 0  |   0, 1 | double |
 
 When `stochastic_channels` is 0, it is assumed that
 there are sufficiently many channels of every conductance
 type, and that we can use a deterministic ODE to integrate
-the gating kinetics of every channel. 
+the gating kinetics of every channel.
 
 When `stochastic_channels` is 1, the deterministic ODE
 governing channel gating is replaced by a stochastic
 equation that is integrated using the [Euler-Maruyama](https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method)
-following the approximate Langevin formulation. With 
+following the approximate Langevin formulation. With
 this flag, the size of the neuron determines the number
 of channels in every population, and thus determines the
-noise added onto the deterministic dynamics. 
+noise added onto the deterministic dynamics.
 
 
 ### `solver_order`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |   0, 4 | double | 
+| 0  |   0, 4 | double |
 
 
 When `solver_order` is 0, standard solvers are used
@@ -135,7 +135,7 @@ but more accurate.
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 5e3  |    +ve integers | double | 
+| 5e3  |    +ve integers | double |
 
 Specify the time, in ms, for which to simulate. Make sure
 that `t_end` is an integer multiple of `sim_dt`
@@ -145,55 +145,55 @@ that `t_end` is an integer multiple of `sim_dt`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |    0,1,2 | double | 
+| 0  |    0,1,2 | double |
 
-`output_type` determines if outputs from the `integrate` 
-function should be separate matrices (0) or organized 
-in a structure (1), or organized in a structure and 
-enable spike-detection in C++ code (2). The 0 option is 
-useful when you only want a few outputs or don't care 
-about lots of variable names. The latter options are 
-useful when it's important to keep all the output data 
-organized. In addition, the 2 option saves memory at the 
+`output_type` determines if outputs from the `integrate`
+function should be separate matrices (0) or organized
+in a structure (1), or organized in a structure and
+enable spike-detection in C++ code (2). The 0 option is
+useful when you only want a few outputs or don't care
+about lots of variable names. The latter options are
+useful when it's important to keep all the output data
+organized. In addition, the 2 option saves memory at the
 expense of detail.
 
 ### `temperature` and `temperature_ref`
 
 `temperature` specifies the temperature at which you want
-to perform simulations. `temperature_ref` holds the "default" 
+to perform simulations. `temperature_ref` holds the "default"
 temperature so that $Q_{10}$ values can be used. These
-values only affect components that are temperature sensitive. 
+values only affect components that are temperature sensitive.
 
 
 ### `verbosity`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |     +ve numbers | double | 
+| 0  |     +ve numbers | double |
 
 `verbosity` is a positive integer that controls how verbose
-xolotl is when running simulations. Set to a large positive 
-number to get more verbose output, useful for debugging. 
+xolotl is when running simulations. Set to a large positive
+number to get more verbose output, useful for debugging.
 
 
 ### `pref`
 
-`x.pref` contains a structure that contains settings that 
-determine the behaviour of some methods. You can change these 
+`x.pref` contains a structure that contains settings that
+determine the behaviour of some methods. You can change these
 settings temporarily by modifying this structure. To make these
 changes persist across sessions, edit the `pref.m` file.
 
-You can also add your own data to `x.pref`, which your 
-functions can use. This is a way to pass metadata and other 
-data along with this model to other functions. 
+You can also add your own data to `x.pref`, which your
+functions can use. This is a way to pass metadata and other
+data along with this model to other functions.
 
 
 ### `Children`
 
-`Children` contains a list of all compartments in the 
-current xolotl model. xolotl only allows you to add 
-objects of type "compartment" to it. Therefore, 
-`x.Children` will give you a list of compartments in 
+`Children` contains a list of all compartments in the
+current xolotl model. xolotl only allows you to add
+objects of type "compartment" to it. Therefore,
+`x.Children` will give you a list of compartments in
 the model.
 
 ## Methods
@@ -224,7 +224,7 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 **Technical Details**
 
 `xolotl.add` checks that the compartment being added has a legal name
-using `checkCompartmentName`. If so, it calls the `add` method 
+using `checkCompartmentName`. If so, it calls the `add` method
 in the `cpplab` superclass.
 
 
@@ -697,11 +697,11 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 **Description**
 
-A static method that overloads the built-in loadobj method. This sets 
+A static method that overloads the built-in loadobj method. This sets
 local parameters, and is useful when xolotl objects are saved to
-disk and loaded. 
+disk and loaded.
 
-!!! warning 
+!!! warning
     Do not use this method. This method exists so that MATLAB knows how to load xolotl objects correctly
 
 
@@ -1210,10 +1210,3 @@ that constructs the model and integrates it
 !!! info "See Also"
     * [xolotl.transpile](#transpile)
     * [xolotl.compile](#compile)
-
-
-
-
-
-
-
