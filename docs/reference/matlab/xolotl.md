@@ -7,7 +7,7 @@ simulations.
 
 ## Properties
 
-Every xolotl object has the following properties listen in this document. To access a property, use dot notation, i.e.:
+Every xolotl object has the following properties listed in this document. To access a property, use dot notation, i.e.:
 
 ```matlab
 x.verbosity
